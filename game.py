@@ -7,6 +7,8 @@ from score_turtle import ScoreTurtle
 from fruit import Fruit
 from keyboard import Keyboard
 
+from sound import Sound
+
 # Create the screen
 screen = turtle.Screen()
 # Get the canvas
@@ -33,7 +35,11 @@ def setup():
     
 def register_shapes():
     turtle.addshape("img/apple.gif")
+    turtle.addshape("img/banana.gif")
+    turtle.addshape("img/orange.gif")
+    turtle.addshape("img/pear.gif")
     turtle.addshape("img/grape.gif")
+    turtle.addshape("img/bomb.gif")
     turtle.addshape("img/player.gif")
 
 player = None
@@ -45,7 +51,9 @@ def create_player():
     PLAYER_TOP_Y = player.ycor() + PLAYER_HEIGHT / 2
     
     kb.register_key("a", "left")
+    kb.register_key("A", "left")
     kb.register_key("d", "right")
+    kb.register_key("D", "right")
     
     turtle.listen()
 
@@ -60,15 +68,22 @@ def draw():
                     if (player.get_left_x() < entity.get_left_x() < player.get_right_x() or
                         player.get_left_x() < entity.get_right_x() < player.get_right_x()):
                         player.score += 1
-                        if (player.score % 2 is 0):
-                            global current_speed
-                            if not (current_speed < 0.5):
-                                current_speed *= DROP_SPEED_MULTIPLIER
-                        score.update_score(player.score, round(current_speed, 2))
+                        Sound.play('coin')
+                        if (player.score % LEVEL_UP_SCORE is 0) and player.level < 20:
+                            player.level += 1
+                            print("-" * 10)
+                            print("Level up! - " + str(player.level))
+                            print("Interval: " + str(DROP_DATA[player.level]))
+                            print("Speed: " + str(SPEED_DATA[player.level]))
+                            print("-" * 10)
+                        elif player.score == 100:
+                            Sound.play('hooray')
+                        score.update_score(player.score, player.health, player.level)
                         entity.despawn()
                     elif update is False:
-                        print("Fail")
+                        print("You missed!")
                         gameover = player.miss()
+                        score.update_score(player.score, player.health, player.level)
                 if gameover is True:
                     score.game_over()
                     canvas.after_cancel(task_id)
@@ -81,18 +96,17 @@ def draw():
     canvas.after(20, draw)
 
 task_id = None
-current_speed = INITIAL_DROP_SPEED
 def spawn_fruits():
-    global task_id, current_speed
-    Tutorial.raining_fruits()
-    task_id = canvas.after(int(current_speed * 1000), spawn_fruits)
+    global player, task_id
+    Tutorial.raining_fruits(player.level)
+    task_id = canvas.after(int(DROP_DATA[player.level] * 1000), spawn_fruits)
 
 setup()
 register_shapes()
 
 game_arena = Arena()
 game_arena.draw_arena()
-score.update_score(0, current_speed)
+score.update_score(0, PLAYER_HEALTH, 0)
 create_player()
 
 from tutorial import Tutorial

@@ -2,11 +2,28 @@
 # You can change these
 # Pixels per milliseconds
 PLAYER_SPEED = 20
-# Player health (# of hits)
+# Player health (# of misses player can have)
 PLAYER_HEALTH = 3
-# Starting speed of each fruit drop in seconds
-INITIAL_DROP_SPEED = 5
-DROP_SPEED_MULTIPLIER = 0.75
+# Fruit stuff
+FRUIT_ACCELERATION = 0.1
+# Level stuff
+# How many fruits to level up?
+LEVEL_UP_SCORE = 2
+# Time between fruit drops as level increases
+DROP_DATA = [
+    3, 3, 2.8, 2.8, 2.8,
+    2.5, 2.5, 2, 2, 2,
+    1.8, 1.8, 1.5, 1.5, 1.2,
+    1, 1, 1, 1, 0.5, 0.4
+]
+# Speed of the fruit as level increases
+SPEED_DATA = [
+    0.5, 0.5, 0.8, 0.8, 0.8,
+    1, 1, 1.2, 1.2, 1.2,
+    1.5, 1.5, 1.5, 1.8, 1.8,
+    2, 2, 2, 2.2, 2.2,
+    2.2, 2.2, 2.5, 2.5, 3
+]
 # -----------------------------------------------------
 # Don't touch these!
 WINDOW_LENGTH = 1000

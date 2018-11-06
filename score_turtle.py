@@ -9,11 +9,16 @@ class ScoreTurtle(Turtle):
         self.penup()
         self.hideturtle()
         
-    def update_score(self, score, speed):
+    def update_score(self, score, lives, level):
         self.clear()
         self.color("blue")
-        self.goto(300, 200)
-        self.write("Score: " + str(score) + "\nSpeed: " + str(speed), font=("Arial bold", 24), align="center")
+        self.goto(350, 200)
+        self.write(
+            "Score: " + str(score) + "\n" +
+            "Lives: " + str(lives) + "\n" +
+            "Level: " + str(level),
+            font=("Arial bold", 24), align="center"
+        )
         
     def game_over(self):
         self.color("blue")

@@ -3,7 +3,7 @@ from constants import *
 
 class Fruit(Turtle):
     
-    def __init__(self, x, name):
+    def __init__(self, x, name, speed):
         Turtle.__init__(self)
         
         self.speed(0)
@@ -13,7 +13,8 @@ class Fruit(Turtle):
         self.sety(TOP_EDGE)
         self.seth(270)
         
-        self.step_size = 5
+        self.velocity = speed
+        self.acceleration = FRUIT_ACCELERATION
         self.radius = 5
         
     def is_inside(self, y):
@@ -29,7 +30,6 @@ class Fruit(Turtle):
         return self.ycor() - FRUIT_SIZE / 2
     
     def despawn(self):
-        print("Despawning")
         self.hideturtle()
         
     def update(self):
@@ -37,9 +37,9 @@ class Fruit(Turtle):
             return
         if self.is_inside(self.ycor()):
             # Falling code
-            self.sety(self.ycor() - self.step_size)
+            self.sety(self.ycor() - self.velocity)
+            self.velocity += self.acceleration
             return True
         else:
-            print("Hit the bottom!")
             self.hideturtle()
             return False

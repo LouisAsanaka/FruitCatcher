@@ -1,6 +1,7 @@
 from turtle import Turtle
 from constants import *
-import winsound
+
+from sound import Sound
 
 class Player(Turtle):
 
@@ -17,6 +18,7 @@ class Player(Turtle):
         self.health = PLAYER_HEALTH
         
         self.score = 0
+        self.level = 0
 
         self.setx(coord[0])
         self.sety(coord[1])
@@ -45,13 +47,11 @@ class Player(Turtle):
             self.setx(tempx)
   
     def miss(self):
-        print("Miss!")
-        winsound.PlaySound('sound/oof.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
-        if self.health == 1:
+        Sound.play('oof')
+        self.health -= 1
+        if self.health <= 0:
             return True
-        else:
-            self.health -= 1
-            return False
+        return False
     
     def update(self):
         # Handle keyboard input
