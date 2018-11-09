@@ -8,6 +8,7 @@ class Fruit(Turtle):
         
         self.speed(0)
         self.penup()
+        self.name = name
         self.shape("img/" + name + ".gif")
         self.setx(x)
         self.sety(TOP_EDGE)

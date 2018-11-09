@@ -67,20 +67,24 @@ def draw():
                 if entity.get_bottom_y() < PLAYER_TOP_Y:
                     if (player.get_left_x() < entity.get_left_x() < player.get_right_x() or
                         player.get_left_x() < entity.get_right_x() < player.get_right_x()):
-                        player.score += 1
-                        Sound.play('coin')
-                        if (player.score % LEVEL_UP_SCORE is 0) and player.level < 20:
-                            player.level += 1
-                            print("-" * 10)
-                            print("Level up! - " + str(player.level))
-                            print("Interval: " + str(DROP_DATA[player.level]))
-                            print("Speed: " + str(SPEED_DATA[player.level]))
-                            print("-" * 10)
-                        elif player.score == 100:
-                            Sound.play('hooray')
+                        if entity.name is "bomb":
+                            gameover = player.miss()
+                            Sound.play('bomb')
+                        else:
+                            player.score += 1
+                            Sound.play('coin')
+                            if (player.score % LEVEL_UP_SCORE is 0) and player.level < 20:
+                                player.level += 1
+                                print("-" * 10)
+                                print("Level up! - " + str(player.level))
+                                print("Interval: " + str(DROP_DATA[player.level]))
+                                print("Speed: " + str(SPEED_DATA[player.level]))
+                                print("-" * 10)
+                            elif player.score == 100:
+                                Sound.play('hooray')
                         score.update_score(player.score, player.health, player.level)
                         entity.despawn()
-                    elif update is False:
+                    elif (update is False) and (entity.name is not "bomb"):
                         print("You missed!")
                         gameover = player.miss()
                         score.update_score(player.score, player.health, player.level)
