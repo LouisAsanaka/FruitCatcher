@@ -71,7 +71,7 @@ def draw():
                             gameover = player.miss()
                             Sound.play('bomb')
                         else:
-                            player.score += 1
+                            player.score += SCORE_PER_FRUIT
                             Sound.play('coin')
                             if (player.score % LEVEL_UP_SCORE is 0) and player.level < 20:
                                 player.level += 1

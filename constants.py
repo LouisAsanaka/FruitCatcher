@@ -10,6 +10,8 @@ PLAYER_HEALTH = 3
 FRUIT_ACCELERATION = 0.1
 # Number of fruit to rain each time
 FRUIT_RAIN_COUNT = 1
+# Score you get per fruit
+SCORE_PER_FRUIT = 1
 # Chance to drop a bomb
 # Ex: 4 means 25%, 1 in 4 chance
 BOMB_DROP_CHANCE = 4
